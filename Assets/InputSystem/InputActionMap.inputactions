@@ -1,0 +1,46 @@
+{
+    "name": "InputActionMap",
+    "maps": [
+        {
+            "name": "Gamepad",
+            "id": "142178bb-5cc1-4602-a7cd-f6a1d6768ab2",
+            "actions": [
+                {
+                    "name": "RightForward",
+                    "type": "Value",
+                    "id": "97d45753-c992-4d73-bd83-8987020927cf",
+                    "expectedControlType": "Digital",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ea4f4113-9328-44c9-89c4-a3619a715359",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightForward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Gamepad",
+            "bindingGroup": "Gamepad",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
