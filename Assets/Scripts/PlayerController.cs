@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     private PlayerUIController _playerUIControllerPrefab;
     [SerializeField] 
     private List<GameObject> _sprites = new List<GameObject>();
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float _sideThrustMultiplier = 0.3f;
 
     private PlayerUIController _playerUIController;
     private PlayerInputManager _playerInputManager;
@@ -19,9 +22,8 @@ public class PlayerController : MonoBehaviour
     private float _rightEngineValue=0f;
     private float _leftEngineTarget =0f;
     private float _leftEngineValue=0f;
-    [SerializeField]
-    [Range(0f, 1f)]
-    private float _sideThrustMultiplier = 0.3f;
+    private float _leanTarget = 0f;
+    private float _leanValue = 0f;
     
     public void OnEnable()
     {
@@ -42,9 +44,12 @@ public class PlayerController : MonoBehaviour
     {
         _rightEngineValue = Mathf.Lerp(_rightEngineValue, _rightEngineTarget, Time.deltaTime * 3f);
         _leftEngineValue = Mathf.Lerp(_leftEngineValue, _leftEngineTarget, Time.deltaTime * 3f);
+        _leanValue = Mathf.Lerp(_leanValue, _leanTarget, Time.deltaTime);
         float forward = (_rightEngineValue + _leftEngineValue) * (1 - _sideThrustMultiplier);
         float side = (_leftEngineValue - _rightEngineValue) * _sideThrustMultiplier;
-        _playerRocket.ApplyVelocity(forward, side);
+        
+        _playerRocket.ApplyVelocity(forward, side, _leanValue);
+        _playerUIController.DisplaySpeed(_playerRocket.GetSpeed());
     }
     
     public void OnRightForward(InputValue value)
@@ -65,5 +70,11 @@ public class PlayerController : MonoBehaviour
     public void OnLeftBack(InputValue value)
     {
         _leftEngineTarget= -0.5f *  value.Get<float>();
+    }
+    
+    public void OnLean(InputValue value)
+    {
+        _leanTarget = value.Get<float>();
+        Debug.Log("Lean" + _leanTarget);
     }
 }

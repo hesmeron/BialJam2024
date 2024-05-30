@@ -5,7 +5,7 @@ public class GravitySource : MonoBehaviour
     [SerializeField] 
     private float _mass;
 
-    public Vector2 GetAccelerationAtPosition(Vector3 position)
+    public virtual Vector2 GetAccelerationAtPosition(Vector3 position)
     {
         Vector2 direction= transform.position - position;
         float distance = direction.magnitude;

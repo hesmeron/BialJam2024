@@ -34,30 +34,32 @@ public class GravityField : MonoBehaviour
 
         float drawingStep = _cellSize/3;
 
-        for (int x = 0; x < _accelerationTable.Width; x++)
-        {
-            for (int y = 0; y < _accelerationTable.Height; y++)
-            {
-                Vector3 position = PositionFromCoordinates(x,y);
-                Vector2 acceleration = GetAccelerationAtPosition(position + transform.position) / _gravityCoefficient;
-                acceleration = acceleration.normalized * MathF.Min(acceleration.magnitude, _cellSize/2f);
-                Gizmos.color = Color.black;
-                Gizmos.DrawSphere(position, drawingStep/10f);
-                DrawArrow(position, acceleration);
-                /*
-                for (float xi = 0; xi < _cellSize; xi += drawingStep)
-                {
-                    for (float yi = 0; yi < _cellSize; yi += drawingStep)
-                    {
-                        Vector3 positionPrime = (Vector2) position + new Vector2(xi,yi);
-                        Vector2 accelerationPrime = GetAccelerationAtPosition(positionPrime + transform.position) / 50f;
-                        accelerationPrime = accelerationPrime.normalized * MathF.Min(acceleration.magnitude, drawingStep/2f);
-                        DrawArrow(positionPrime, accelerationPrime);
-                    }
-                }
-                */
+        /*
+for (int x = 0; x < _accelerationTable.Width; x++)
+{
+for (int y = 0; y < _accelerationTable.Height; y++)
+{
+Vector3 position = PositionFromCoordinates(x,y);
+Vector2 acceleration = GetAccelerationAtPosition(position + transform.position) / _gravityCoefficient;
+acceleration = acceleration.normalized * MathF.Min(acceleration.magnitude, _cellSize/2f);
+Gizmos.color = Color.black;
+Gizmos.DrawSphere(position, drawingStep/10f);
+DrawArrow(position, acceleration);
+
+for (float xi = 0; xi < _cellSize; xi += drawingStep)
+{
+    for (float yi = 0; yi < _cellSize; yi += drawingStep)
+    {
+        Vector3 positionPrime = (Vector2) position + new Vector2(xi,yi);
+        Vector2 accelerationPrime = GetAccelerationAtPosition(positionPrime + transform.position) / 50f;
+        accelerationPrime = accelerationPrime.normalized * MathF.Min(acceleration.magnitude, drawingStep/2f);
+        DrawArrow(positionPrime, accelerationPrime);
+    }
+}
+
             }
         }
+        */
     }
     
     private static void DrawArrow(Vector3 position, Vector3 direction)
