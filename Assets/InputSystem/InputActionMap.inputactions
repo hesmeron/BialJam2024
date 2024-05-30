@@ -9,7 +9,16 @@
                     "name": "RightForward",
                     "type": "Value",
                     "id": "97d45753-c992-4d73-bd83-8987020927cf",
-                    "expectedControlType": "Digital",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LeftForward",
+                    "type": "Value",
+                    "id": "d94bcd68-5ae8-4079-b120-42efa6481dc2",
+                    "expectedControlType": "Analog",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -24,6 +33,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RightForward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1522a19e-37f7-47db-8efa-ad28b9a9d1b4",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftForward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
