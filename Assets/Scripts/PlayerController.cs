@@ -52,8 +52,18 @@ public class PlayerController : MonoBehaviour
         _rightEngineTarget= value.Get<float>();
     }
     
+    public void OnRightBack(InputValue value)
+    {
+        _rightEngineTarget= -0.5f *  value.Get<float>();
+    }
+    
     public void OnLeftForward(InputValue value)
     {
         _leftEngineTarget= value.Get<float>();
+    }
+    
+    public void OnLeftBack(InputValue value)
+    {
+        _leftEngineTarget= -0.5f *  value.Get<float>();
     }
 }

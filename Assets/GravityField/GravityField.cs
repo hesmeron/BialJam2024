@@ -39,7 +39,7 @@ public class GravityField : MonoBehaviour
             for (int y = 0; y < _accelerationTable.Height; y++)
             {
                 Vector3 position = PositionFromCoordinates(x,y);
-                Vector2 acceleration = GetAccelerationAtPosition(position + transform.position) / 50f;
+                Vector2 acceleration = GetAccelerationAtPosition(position + transform.position) / _gravityCoefficient;
                 acceleration = acceleration.normalized * MathF.Min(acceleration.magnitude, _cellSize/2f);
                 Gizmos.color = Color.black;
                 Gizmos.DrawSphere(position, drawingStep/10f);
