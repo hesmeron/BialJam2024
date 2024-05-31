@@ -7,7 +7,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
-{   
+{
+    [SerializeField] 
+    private CameraController _cameraController;
     [SerializeField] 
     private PlayerRocket _playerRocket;
     [SerializeField] 
@@ -96,6 +98,7 @@ public class PlayerController : MonoBehaviour
         
         _playerRocket.ApplyVelocity(forward, side, _leanValue);
         _playerUIController.DisplaySpeed(_playerRocket.GetSpeed());
+        _cameraController.UpdateSpeed(_playerRocket.GetSpeed());
     }
 
     private void HandleCapturing()
