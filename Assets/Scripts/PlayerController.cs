@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -134,6 +135,18 @@ public class PlayerController : MonoBehaviour
         _playerRocket.gameObject.SetActive(false);
         StartCoroutine(RespawnCoroutine());
     }
+    
+    private void Respawn()
+    {
+        _playerUIController.HideDestroyedPanel();
+        _leanValue = 0f;
+        _leftEngineValue = 0f;
+        _rightEngineValue = 0f;
+        _destroyed = false;
+        _playerRocket.gameObject.SetActive(true);
+        _playerRocket.transform.position = _mediator.PlayerSpawnManager.GetSpawnPosition(_playerId);
+        _playerRocket.ResetVelocity();
+    }
 
     private IEnumerator RespawnCoroutine()
     {
@@ -143,22 +156,13 @@ public class PlayerController : MonoBehaviour
             yield return null;
             timeSinceDestruction += Time.deltaTime;
             float timeLeft = _respawnTime - timeSinceDestruction;
+            Debug.Log("Time left " + timeLeft);
             if (timeLeft <= 0)
             {
-                _playerUIController.HideDestroyedPanel();
+                Respawn();
+                break;
             }
-            else
-            {
-                _playerUIController.ShowRespawnTimeLeft(timeLeft);
-            }
-
-            _leanValue = 0f;
-            _leftEngineValue = 0f;
-            _rightEngineValue = 0f;
-            _destroyed = false;
-            _playerRocket.gameObject.SetActive(true);
-            _playerRocket.transform.position = _mediator.PlayerSpawnManager.GetSpawnPosition(_playerId);
-            _playerRocket.ResetVelocity();
+            _playerUIController.ShowRespawnTimeLeft(timeLeft);
         }
     }
 }
