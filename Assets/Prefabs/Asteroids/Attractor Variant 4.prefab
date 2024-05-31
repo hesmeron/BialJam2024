@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2579909522134073673, guid: f8b53dbb28bf7194eb824c9e9f3d487e, type: 3}
       propertyPath: _radius
-      value: 1.56
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 3604361365719129955, guid: f8b53dbb28bf7194eb824c9e9f3d487e, type: 3}
       propertyPath: m_Name
@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3882476687906016514, guid: f8b53dbb28bf7194eb824c9e9f3d487e, type: 3}
       propertyPath: _mass
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8186597721829414295, guid: f8b53dbb28bf7194eb824c9e9f3d487e, type: 3}
       propertyPath: m_Sprite

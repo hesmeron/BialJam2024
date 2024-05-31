@@ -25,7 +25,7 @@ public class PlayerRocket : MonoBehaviour
     public void ApplyVelocity(float forward, float side, float lean)
     {
         Vector2 engineThrust = (transform.up * forward) + (transform.right * side);
-        _velocity += (engineThrust * 0.01f) + _gravityField.GetAccelerationAtPosition(transform.position);
+        _velocity += (engineThrust * 0.005f) + _gravityField.GetAccelerationAtPosition(transform.position);
         _velocity = _velocity.normalized * Mathf.Min(_velocity.magnitude, _maxSpeed);
         Vector2 lookDirection = _velocity.normalized - (Vector2.Perpendicular(_velocity).normalized * lean);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation( Vector3.forward,  lookDirection), Time.deltaTime);
@@ -34,7 +34,7 @@ public class PlayerRocket : MonoBehaviour
 
     public float GetSpeed()
     {
-        return _velocity.magnitude;
+        return _velocity.magnitude * 3f;
     }
     
     public void ResetVelocity()

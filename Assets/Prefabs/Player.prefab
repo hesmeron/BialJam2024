@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minSize: 5
   _maxSize: 25
-  _maxSpeed: 50
+  _maxSpeed: 25
   _animationCurve:
     serializedVersion: 2
     m_Curve:
@@ -151,19 +151,37 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 1
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
+      time: 0.060599223
+      value: 0.28772187
+      inSlope: 0.99999994
+      outSlope: 0.99999994
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.64211154
+      value: 0.9290575
+      inSlope: 0.19592044
+      outSlope: 0.19592044
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3088697
+      outWeight: 0.61127645
+    - serializedVersion: 3
+      time: 1.0041809
+      value: 1
+      inSlope: 0.14554538
+      outSlope: 0.14554538
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.8055941
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

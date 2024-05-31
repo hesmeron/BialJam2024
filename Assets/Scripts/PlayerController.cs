@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         }
         _playerId = _mediator.PlayerInputManager.playerCount - 1;
         _sprites[_playerId].SetActive(true);
-        transform.position += Vector3.right * _playerId;
+        _playerRocket.transform.position = _mediator.PlayerSpawnManager.GetSpawnPosition(_playerId);
         gameObject.name = "Player" + _playerId;
         _playerUIController = Instantiate(_playerUIControllerPrefab);
         _playerUIController.Initialize(_camera);
