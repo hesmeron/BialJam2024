@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour
     private float _leftEngineValue=0f;
     private float _leanTarget = 0f;
     private float _leanValue = 0f;
+    private int _capturedTargets = 0;
     private GameMediator _mediator;
+    private int _playerCount;
     
     public void OnEnable()
     {
@@ -32,12 +34,13 @@ public class PlayerController : MonoBehaviour
         {
             sprite.SetActive(false);
         }
-        int playerCount = _mediator.PlayerInputManager.playerCount - 1;
-        _sprites[playerCount].SetActive(true);
-        transform.position += Vector3.right * playerCount;
-        gameObject.name = "Player" + playerCount;
+        _playerCount = _mediator.PlayerInputManager.playerCount - 1;
+        _sprites[_playerCount].SetActive(true);
+        transform.position += Vector3.right * _playerCount;
+        gameObject.name = "Player" + _playerCount;
         _playerUIController = Instantiate(_playerUIControllerPrefab);
         _playerUIController.Initialize(_camera);
+        _mediator.JoinPhaseController.SetPlayerActive(_playerCount);
     }
 
     private void Update()
@@ -46,6 +49,16 @@ public class PlayerController : MonoBehaviour
         Vector2 targetPosition = _mediator.TargetManager.GetTargetPosition();
         Vector2 translation = targetPosition - (Vector2)_playerRocket.transform.position;
         _playerUIController.CompassController.VisualizeTarget(translation.normalized, translation.magnitude);
+
+        if (_mediator.TargetManager.TryCaptureTheTarget(_playerRocket.transform))
+        {
+            _capturedTargets++;
+            _playerUIController.ShowScore(_capturedTargets);
+            if (_capturedTargets >= 3)
+            {
+                _mediator.EndgamePhaseController.EndGame(_playerCount+1);
+            }
+        }
     }
     public void OnRightForward(InputValue value)
     {

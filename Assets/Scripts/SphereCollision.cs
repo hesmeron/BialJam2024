@@ -11,4 +11,9 @@ public class SphereCollision : MonoBehaviour
         Gizmos.color = new Color(0f, 0f, 1f, 1f);
         Gizmos.DrawWireSphere(transform.position, _radius);
     }
+
+    public bool IsInRange(Vector2 position)
+    {
+        return Vector2.Distance(position, (Vector2)transform.position) <= _radius;
+    }
 }
