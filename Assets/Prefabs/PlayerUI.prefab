@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 5897599782236110416}
   - component: {fileID: 7797076991896689686}
   m_Layer: 5
-  m_Name: Image
+  m_Name: TargetIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.35684776, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.9593928, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -634,6 +634,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 853ebc8c71d5f8446999f4f52e4f73af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxDistance: 50
+  _compassLimitDistance: 2.7
+  _indicator: {fileID: 8167923233953483468}
 --- !u!1 &8596306344323383512
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6743b00f454473469efaacb7a5d4ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _compassController: {fileID: 1303526831279253541}
   _speedDisplay: {fileID: 2703557000610102806}
   _canvas: {fileID: 524975452968912277}
 --- !u!1001 &686248976279848875

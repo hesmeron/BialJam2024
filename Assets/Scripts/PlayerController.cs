@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
-{
+{   
     [SerializeField] 
     private PlayerRocket _playerRocket;
     [SerializeField] 
@@ -17,22 +17,22 @@ public class PlayerController : MonoBehaviour
     private float _sideThrustMultiplier = 0.3f;
 
     private PlayerUIController _playerUIController;
-    private PlayerInputManager _playerInputManager;
     private float _rightEngineTarget=0f;
     private float _rightEngineValue=0f;
     private float _leftEngineTarget =0f;
     private float _leftEngineValue=0f;
     private float _leanTarget = 0f;
     private float _leanValue = 0f;
+    private GameMediator _mediator;
     
     public void OnEnable()
     {
+        _mediator = FindObjectOfType<GameMediator>();
         foreach (GameObject sprite in _sprites)
         {
             sprite.SetActive(false);
         }
-        _playerInputManager = FindObjectOfType<PlayerInputManager>();
-        int playerCount = _playerInputManager.playerCount - 1;
+        int playerCount = _mediator.PlayerInputManager.playerCount - 1;
         _sprites[playerCount].SetActive(true);
         transform.position += Vector3.right * playerCount;
         gameObject.name = "Player" + playerCount;
@@ -42,16 +42,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        _rightEngineValue = Mathf.Lerp(_rightEngineValue, _rightEngineTarget, Time.deltaTime * 3f);
-        _leftEngineValue = Mathf.Lerp(_leftEngineValue, _leftEngineTarget, Time.deltaTime * 3f);
-        _leanValue = Mathf.Lerp(_leanValue, _leanTarget, Time.deltaTime);
-        float forward = (_rightEngineValue + _leftEngineValue) * (1 - _sideThrustMultiplier);
-        float side = (_leftEngineValue - _rightEngineValue) * _sideThrustMultiplier;
-        
-        _playerRocket.ApplyVelocity(forward, side, _leanValue);
-        _playerUIController.DisplaySpeed(_playerRocket.GetSpeed());
+        HandleMovement();
+        Vector2 targetPosition = _mediator.TargetManager.GetTargetPosition();
+        Vector2 translation = targetPosition - (Vector2)_playerRocket.transform.position;
+        _playerUIController.CompassController.VisualizeTarget(translation.normalized, translation.magnitude);
     }
-    
     public void OnRightForward(InputValue value)
     {
         _rightEngineTarget= value.Get<float>();
@@ -76,5 +71,17 @@ public class PlayerController : MonoBehaviour
     {
         _leanTarget = value.Get<float>();
         Debug.Log("Lean" + _leanTarget);
+    }
+
+    private void HandleMovement()
+    {
+        _rightEngineValue = Mathf.Lerp(_rightEngineValue, _rightEngineTarget, Time.deltaTime * 3f);
+        _leftEngineValue = Mathf.Lerp(_leftEngineValue, _leftEngineTarget, Time.deltaTime * 3f);
+        _leanValue = Mathf.Lerp(_leanValue, _leanTarget, Time.deltaTime);
+        float forward = (_rightEngineValue + _leftEngineValue) * (1 - _sideThrustMultiplier);
+        float side = (_leftEngineValue - _rightEngineValue) * _sideThrustMultiplier;
+        
+        _playerRocket.ApplyVelocity(forward, side, _leanValue);
+        _playerUIController.DisplaySpeed(_playerRocket.GetSpeed());
     }
 }
