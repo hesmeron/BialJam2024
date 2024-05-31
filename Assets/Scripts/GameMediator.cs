@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameMediator : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerSpawnManager _playerSpawnManager;
+    [SerializeField] 
+    private CollisionManager _collisionManager;
     [SerializeField]
     private EndgamePhaseController _endgamePhaseController;
     [SerializeField]
@@ -21,4 +23,8 @@ public class GameMediator : MonoBehaviour
     public JoinPhaseController JoinPhaseController => _joinPhaseController;
 
     public EndgamePhaseController EndgamePhaseController => _endgamePhaseController;
+
+    public CollisionManager CollisionManager => _collisionManager;
+
+    public PlayerSpawnManager PlayerSpawnManager => _playerSpawnManager;
 }

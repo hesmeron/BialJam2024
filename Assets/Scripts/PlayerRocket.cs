@@ -36,4 +36,10 @@ public class PlayerRocket : MonoBehaviour
     {
         return _velocity.magnitude;
     }
+    
+    public void ResetVelocity()
+    {
+        _velocity = Vector2.zero;
+        transform.up = Vector2.up;
+    }
 }

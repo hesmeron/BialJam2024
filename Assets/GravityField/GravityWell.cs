@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +17,6 @@ public class GravityWell : GravitySource
     public override Vector2 GetAccelerationAtPosition(Vector3 position)
     {
         Vector2 direction = transform.position - position;
-        return direction.normalized / Mathf.Max(0.001f, _maxDistance - position.magnitude);
+        return direction.normalized / Mathf.Max(0.001f, Mathf.Pow(_maxDistance - position.magnitude, 2));
     }
 }
