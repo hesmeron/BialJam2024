@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7847832963706015855}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00805074, y: -0.0625784, z: 0.1273446, w: 0.9898498}
+  m_LocalRotation: {x: 0, y: 0, z: 0.12663177, w: 0.9919498}
   m_LocalPosition: {x: -1.106, y: -0.738, z: 0.019}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 1.827, y: -7.002, z: 14.55}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 14.55}
 --- !u!198 &364520817138355108
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.9
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -340,7 +340,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -393,7 +393,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -446,7 +446,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -0.48729593
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -606,8 +606,8 @@ ParticleSystem:
     gravitySource: 1
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
-    size3D: 0
-    rotation3D: 0
+    size3D: 1
+    rotation3D: 1
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
@@ -671,7 +671,7 @@ ParticleSystem:
     radiusThickness: 0
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 90, y: 0, z: 0}
+    m_Rotation: {x: 90, y: -400, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -810,7 +810,7 @@ ParticleSystem:
     arc:
       value: 360
       mode: 0
-      spread: 0
+      spread: 0.06
       speed:
         serializedVersion: 2
         minMaxState: 0
@@ -1317,7 +1317,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0, b: 0, a: 1}
+        key0: {r: 1, g: 0, b: 0, a: 0.6901961}
         key1: {r: 1, g: 0.51870775, b: 0, a: 0.7490196}
         key2: {r: 1, g: 0.96657693, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -4807,7 +4807,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 309230265
   m_SortingLayer: 1
   m_SortingOrder: -229
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0

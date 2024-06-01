@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class CompassController : MonoBehaviour
 {
+    [SerializeField] 
+    private Image _arrow;
     [SerializeField]
     private Image[] _images = Array.Empty<Image>();
     [SerializeField]
@@ -20,8 +22,9 @@ public class CompassController : MonoBehaviour
         _indicator.transform.position = transform.position;
     }
 
-    public void VisualizeTarget(Vector2 direction,  float distance)
+    public void VisualizeTarget(Vector2 direction,  Vector3 orientation, float distance)
     {
+        _arrow.transform.up = orientation;
         float fitting = distance / _maxDistance;
         if (fitting < 1)
         {
@@ -34,7 +37,6 @@ public class CompassController : MonoBehaviour
             float uiDistance = Mathf.Clamp01(fitting) * _compassLimitDistance;
             Vector2 translation = direction.normalized * uiDistance;
             _indicator.position = _origin.position + (Vector3) translation;
-            Debug.Log("Translation " + translation.magnitude);
         }
         else
         {
@@ -52,7 +54,10 @@ public class CompassController : MonoBehaviour
 
             atan /= 360;
             int index = Mathf.Max(0, Mathf.RoundToInt(atan * _images.Length));
-            Debug.Log("Image index " + index + " " + atan);
+            if (index >= _images.Length)
+            {
+                index = 0;
+            }
             _images[index].gameObject.SetActive(true);
         }
 

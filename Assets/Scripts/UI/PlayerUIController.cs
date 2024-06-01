@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerUIController : MonoBehaviour
 {
     [SerializeField] 
+    private StartingSequenceUI _startingSequenceUI;
+    [SerializeField] 
     private LeanGauge _leftLeanGauge;
     [SerializeField]
     private LeanGauge _rightLeanGauge;
@@ -24,6 +26,8 @@ public class PlayerUIController : MonoBehaviour
     private Canvas _canvas;
 
     public CompassController CompassController => _compassController;
+
+    public StartingSequenceUI StartingSequenceUI => _startingSequenceUI;
 
     public void Initialize(Camera camera)
     {

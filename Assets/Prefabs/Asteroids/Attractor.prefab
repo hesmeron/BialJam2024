@@ -99,6 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mass: 1
+  _animationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &2579909522134073673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,4 +117,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d39988bb09560a499e6cfdf0952f7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 2.6
+  _radius: 2.35

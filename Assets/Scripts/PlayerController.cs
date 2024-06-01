@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using TMPro.Examples;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] 
     private Camera _camera;
     [SerializeField] 
-    private PlayerUIController _playerUIControllerPrefab;
+    private PlayerUIController _playerOneUIControllerPrefab;    
+    [SerializeField] 
+    private PlayerUIController _playerTwoUIControllerPrefab;
     [SerializeField] 
     private List<GameObject> _sprites = new List<GameObject>();
     [SerializeField]
@@ -37,9 +39,19 @@ public class PlayerController : MonoBehaviour
     private GameMediator _mediator;
     private int _playerId;
     private bool _destroyed = false;
-    
-    public void OnEnable()
+    private bool _isIntialized = false;
+
+    private void OnEnable()
     {
+        if (!_isIntialized)
+        {
+            Initialize();
+        }
+    }
+
+    public void Initialize()
+    {
+        _isIntialized = true;
         _mediator = FindObjectOfType<GameMediator>();
         foreach (GameObject sprite in _sprites)
         {
@@ -47,9 +59,17 @@ public class PlayerController : MonoBehaviour
         }
         _playerId = _mediator.PlayerInputManager.playerCount - 1;
         _sprites[_playerId].SetActive(true);
-        _playerRocket.transform.position = _mediator.PlayerSpawnManager.GetSpawnPosition(_playerId);
+        _playerRocket.transform.position = _mediator.PlayerSpawnManager.GetSpawnPosition(_playerId , this);
         gameObject.name = "Player" + _playerId;
-        _playerUIController = Instantiate(_playerUIControllerPrefab);
+        if (_playerId == 0)
+        {
+            _playerUIController = Instantiate(_playerOneUIControllerPrefab);
+        }
+        else
+        {
+            _playerUIController = Instantiate(_playerTwoUIControllerPrefab);
+        }
+
         _playerUIController.Initialize(_camera);
         _mediator.JoinPhaseController.SetPlayerActive(_playerId);
     }
@@ -104,7 +124,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 targetPosition = _mediator.TargetManager.GetTargetPosition();
         Vector2 translation = targetPosition - (Vector2)_playerRocket.transform.position;
-        _playerUIController.CompassController.VisualizeTarget(translation.normalized, translation.magnitude);
+        _playerUIController.CompassController.VisualizeTarget(translation.normalized, _playerRocket.transform.up, translation.magnitude);
 
         if (_mediator.TargetManager.TryCaptureTheTarget(_playerRocket.transform))
         {
@@ -115,6 +135,11 @@ public class PlayerController : MonoBehaviour
                 _mediator.EndgamePhaseController.EndGame(_playerId+1);
             }
         }
+    }
+
+    private void OnRestart()
+    {
+        Debug.Log("On restart");
     }
 
     private void HandleCollisions()
@@ -146,8 +171,23 @@ public class PlayerController : MonoBehaviour
         _rightEngineValue = 0f;
         _destroyed = false;
         _playerRocket.gameObject.SetActive(true);
-        _playerRocket.transform.position = _mediator.PlayerSpawnManager.GetSpawnPosition(_playerId);
+        _playerRocket.transform.position = _mediator.PlayerSpawnManager.GetSpawnPosition(_playerId, this);
         _playerRocket.ResetVelocity();
+    }
+
+    public void DisplayStartingSequence(float time)
+    {
+        if (!_isIntialized)
+        {
+            Initialize();
+        }
+        Assert.IsNotNull(_playerUIController);
+        _playerUIController.StartingSequenceUI.DisplayNumber(4 - Mathf.CeilToInt(time));
+        if (time <= Single.Epsilon)
+        {
+            _playerUIController.StartingSequenceUI.TurnOff();
+            _playerRocket.StartRace();
+        }
     }
 
     private IEnumerator RespawnCoroutine()

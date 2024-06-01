@@ -109,7 +109,7 @@ DrawArrow(positionPrime, accelerationPrime);
             for (int y = 0; y < _height; y++)
             {
                 Vector2 acceletration = _accelerationTable[x, y];
-                float value = 1 - (acceletration.magnitude * 50f);
+                float value = (acceletration.magnitude * 50f);
                 _texture.SetPixel(x,y, new Color(value, value, value, value));
             }
         }

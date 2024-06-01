@@ -269,7 +269,8 @@ MonoBehaviour:
   _cameraController: {fileID: 3445713581974909649}
   _playerRocket: {fileID: 582882444892073142}
   _camera: {fileID: 7971280537201370652}
-  _playerUIControllerPrefab: {fileID: 5457710019395320222, guid: d9b780e2e2914f248a79d365dd014fe4, type: 3}
+  _playerOneUIControllerPrefab: {fileID: 5457710019395320222, guid: d9b780e2e2914f248a79d365dd014fe4, type: 3}
+  _playerTwoUIControllerPrefab: {fileID: 7813271007389620452, guid: 3998ea2ebb2a5664c94dd99f25d12f31, type: 3}
   _sprites:
   - {fileID: 4121067333238760305}
   - {fileID: 7042963134296996806}
@@ -335,7 +336,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2860e383414a2794194d0504165bb4d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftParticleSystem: {fileID: 6848746741527474671}
+  _rightParticleSystem: {fileID: 7478626334248011522}
   _maxSpeed: 100
+  _thrustRotation: 1
 --- !u!1 &661756626107718955
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,6 +945,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5711301358711195948, guid: 16102372c55bf5c45b8cdfd1aadc3138, type: 3}
   m_PrefabInstance: {fileID: 6486497519254616651}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &6848746741527474671 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 364520817138355108, guid: 16102372c55bf5c45b8cdfd1aadc3138, type: 3}
+  m_PrefabInstance: {fileID: 6486497519254616651}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7117484869931256998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -949,6 +958,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8409596953932844209}
     m_Modifications:
+    - target: {fileID: 364520817138355108, guid: 16102372c55bf5c45b8cdfd1aadc3138, type: 3}
+      propertyPath: InitialModule.startRotation.scalar
+      value: 0.17453292
+      objectReference: {fileID: 0}
     - target: {fileID: 5711301358711195948, guid: 16102372c55bf5c45b8cdfd1aadc3138, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.39
@@ -1001,5 +1014,10 @@ PrefabInstance:
 --- !u!4 &3280024141307544970 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5711301358711195948, guid: 16102372c55bf5c45b8cdfd1aadc3138, type: 3}
+  m_PrefabInstance: {fileID: 7117484869931256998}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7478626334248011522 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 364520817138355108, guid: 16102372c55bf5c45b8cdfd1aadc3138, type: 3}
   m_PrefabInstance: {fileID: 7117484869931256998}
   m_PrefabAsset: {fileID: 0}

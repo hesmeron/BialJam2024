@@ -1,11 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerRocket : MonoBehaviour
 {
+    [SerializeField] 
+    private ParticleSystem _leftParticleSystem;
+    [SerializeField] 
+    private ParticleSystem _rightParticleSystem;
     [SerializeField]
     private float _maxSpeed = 100f;
     [SerializeField] 
@@ -13,6 +13,7 @@ public class PlayerRocket : MonoBehaviour
     
     private GravityField _gravityField;
     private Vector2 _velocity = Vector3.zero;
+    private bool _wasStarted = false;
 
     private void OnEnable()
     {
@@ -23,24 +24,41 @@ public class PlayerRocket : MonoBehaviour
     {
         Gizmos.DrawLine(transform.position, transform.position +  (Vector3) Vector2.Perpendicular(_velocity).normalized);
     }
-    
-    public void ApplyVelocity(float _rightEngineValue, float _leftEngineValue, float lean)
+
+    public void StartRace()
     {
-        float friction = 0.15f;
+        _wasStarted = true;
+    }
+    
+    public void ApplyVelocity(float _leftEngineValue, float _rightEngineValue, float lean)
+    {
+        Vector2 engineThrust = RotateVector(transform.up * _rightEngineValue, _thrustRotation) +
+                               RotateVector(transform.up * _leftEngineValue, -_thrustRotation);
+        if (_wasStarted)
+        {
+            float friction = 0.15f;
 
 
-        _velocity *= 1 - (friction * Time.deltaTime);
-
-        Vector2 engineThrust = RotateVector(transform.up * _rightEngineValue, -_thrustRotation) +
-                               RotateVector(transform.up * _leftEngineValue, _thrustRotation);
-        Vector2 gravity = _gravityField.GetAccelerationAtPosition(transform.position) *
-                          Mathf.Clamp(_velocity.magnitude / 20f, 0.25f, 1f);
-        _velocity += (engineThrust * 0.025f) + gravity;
-        _velocity = _velocity.normalized * Mathf.Min(_velocity.magnitude, _maxSpeed);
+            _velocity *= 1 - (friction * Time.deltaTime);
+            Vector2 gravity = _gravityField.GetAccelerationAtPosition(transform.position) *
+                              Mathf.Clamp(_velocity.magnitude / 20f, 0.25f, 1f);
+            _velocity += (engineThrust * 0.025f) + gravity;
+            _velocity = _velocity.normalized * Mathf.Min(_velocity.magnitude, _maxSpeed);
         
-        Vector2 lookDirection = RotateVector(_velocity.normalized, (lean * -1f));
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation( Vector3.forward,  lookDirection), Time.deltaTime * 16f);
-        transform.position += (Vector3) _velocity * Time.deltaTime;
+            Vector2 lookDirection = RotateVector(_velocity.normalized, (lean * -1f));
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation( Vector3.forward,  lookDirection), Time.deltaTime * 16f);
+            transform.position += (Vector3) _velocity * Time.deltaTime;
+        }
+        SetParticles(_leftParticleSystem, _leftEngineValue);
+        SetParticles(_rightParticleSystem, _rightEngineValue);
+    }
+
+    private void SetParticles(ParticleSystem particleSystem, float value)
+    {
+        var main = particleSystem.main;
+        var emission = particleSystem.emission;
+        emission.rateOverTime = Mathf.Abs(value * 20f);
+        particleSystem.transform.localScale = Vector3.one * Mathf.Sign(value);
     }
 
     private Vector2 RotateVector(Vector2 v, float degrees)
