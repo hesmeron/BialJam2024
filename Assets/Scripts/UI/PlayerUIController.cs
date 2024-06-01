@@ -1,8 +1,17 @@
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
 public class PlayerUIController : MonoBehaviour
 {
+    [SerializeField] 
+    private LeanGauge _leftLeanGauge;
+    [SerializeField]
+    private LeanGauge _rightLeanGauge;
+    [SerializeField]
+    private EngineGaugeUI _leftEngineGauge;
+    [SerializeField]
+    private EngineGaugeUI _rightEngineGauge;
     [SerializeField] 
     private ShipDestroyedPanel _shipDestroyedPanel;
     [SerializeField] 
@@ -19,6 +28,26 @@ public class PlayerUIController : MonoBehaviour
     public void Initialize(Camera camera)
     {
         _canvas.worldCamera = camera;
+    }
+
+    public void DisplayLean(float lean)
+    {
+        if (lean < 0)
+        {
+            _leftLeanGauge.DisplayLean(-lean);
+            _rightLeanGauge.DisplayLean(0f);
+        }
+        else
+        {
+            _leftLeanGauge.DisplayLean(0f);
+            _rightLeanGauge.DisplayLean(lean);
+        }
+    }
+
+    public void DisplayEngines(float left, float right)
+    {
+        _leftEngineGauge.DisplayThrust(left);
+        _rightEngineGauge.DisplayThrust(right);
     }
 
     public void DisplaySpeed(float speed)

@@ -93,11 +93,10 @@ public class PlayerController : MonoBehaviour
         _rightEngineValue = Mathf.Lerp(_rightEngineValue, _rightEngineTarget, Time.deltaTime * 3f);
         _leftEngineValue = Mathf.Lerp(_leftEngineValue, _leftEngineTarget, Time.deltaTime * 3f);
         _leanValue = Mathf.Lerp(_leanValue, _leanTarget, Time.deltaTime);
-        float forward = (_rightEngineValue + _leftEngineValue) * (1 - _sideThrustMultiplier);
-        float side = (_leftEngineValue - _rightEngineValue) * _sideThrustMultiplier;
-        
-        _playerRocket.ApplyVelocity(forward, side, _leanValue);
+        _playerRocket.ApplyVelocity(_leftEngineValue, _rightEngineValue, _leanValue);
         _playerUIController.DisplaySpeed(_playerRocket.GetSpeed());
+        _playerUIController.DisplayEngines(_leftEngineValue, _rightEngineValue);
+        _playerUIController.DisplayLean(_leanValue);
         _cameraController.UpdateSpeed(_playerRocket.GetSpeed());
     }
 
@@ -159,7 +158,6 @@ public class PlayerController : MonoBehaviour
             yield return null;
             timeSinceDestruction += Time.deltaTime;
             float timeLeft = _respawnTime - timeSinceDestruction;
-            Debug.Log("Time left " + timeLeft);
             if (timeLeft <= 0)
             {
                 Respawn();

@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
+using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 [System.Serializable]
 public class GravityField : MonoBehaviour
@@ -16,6 +20,22 @@ public class GravityField : MonoBehaviour
     [HideInInspector]
     [SerializeField]
     private Serialized2DArray<Vector2> _accelerationTable;
+    //[SerializeField] 
+    //private RenderTexture _renderTexture;
+    [SerializeField] 
+    private Texture2D _texture;
+    [SerializeField]
+    private Material _material;
+    [SerializeField]
+    [ReadOnly]
+    private int _width;
+    [SerializeField]
+    [ReadOnly]
+    private int _height;
+    [SerializeField]
+    private SpriteRenderer _renderer;
+
+    private static readonly int MainTexture = Shader.PropertyToID("_MainTexture");
 
 
     public Vector2 Extent
@@ -34,7 +54,7 @@ public class GravityField : MonoBehaviour
 
         float drawingStep = _cellSize/3;
 
-
+/*
 for (int x = 0; x < _accelerationTable.Width; x++)
 {
 for (int y = 0; y < _accelerationTable.Height; y++)
@@ -45,7 +65,7 @@ acceleration = acceleration.normalized * MathF.Min(acceleration.magnitude, _cell
 Gizmos.color = Color.black;
 Gizmos.DrawSphere(position, drawingStep/10f);
 DrawArrow(position, acceleration);
-/*
+
 for (float xi = 0; xi < _cellSize; xi += drawingStep)
 {
 for (float yi = 0; yi < _cellSize; yi += drawingStep)
@@ -56,10 +76,11 @@ accelerationPrime = accelerationPrime.normalized * MathF.Min(acceleration.magnit
 DrawArrow(positionPrime, accelerationPrime);
 }
 }
-*/
+
 
     }
 }
+*/
 
     }
     
@@ -79,19 +100,39 @@ DrawArrow(positionPrime, accelerationPrime);
         Gizmos.DrawLine(sidesOrign + perpendicular, position + direction);
         Gizmos.DrawLine(sidesOrign - perpendicular, position + direction);
     }
-    
+
+    private void Start()
+    {
+        _texture = new Texture2D(_width, _height);
+        for (int x = 0; x < _width; x++)
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                Vector2 acceletration = _accelerationTable[x, y];
+                float value = 1 - (acceletration.magnitude * 50f);
+                _texture.SetPixel(x,y, new Color(value, value, value, value));
+            }
+        }
+        _texture.Apply();
+        //_renderer.sprite = Sprite.Create(_texture, new Rect(Vector2.zero, Vector2.one), Vector2.one/2f, 1);
+        _material.SetTexture(MainTexture, _texture);
+    }
+
     public void CalculateAcceleration()
     {
-        int width = Mathf.CeilToInt(_extent.x / _cellSize) +1;
-        int height = Mathf.CeilToInt(_extent.y / _cellSize) +1;
+        _width = Mathf.CeilToInt(_extent.x / _cellSize) +1;
+        _height = Mathf.CeilToInt(_extent.y / _cellSize) +1;
 
-        _accelerationTable = new Serialized2DArray<Vector2>(width, height);
-        for (int x = 0; x < width; x++)
+        _accelerationTable = new Serialized2DArray<Vector2>(_width, _height);
+
+        //_renderTexture = new RenderTexture(width, height, GraphicsFormat.R16_SFloat, GraphicsFormat.None);
+        for (int x = 0; x < _width; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < _height; y++)
             {
                 Vector3 position = PositionFromCoordinates(x, y);
-                _accelerationTable[x, y] = CalculateAccelerationAtPosition(position);
+                Vector2 acceletration = CalculateAccelerationAtPosition(position);
+                _accelerationTable[x, y] = acceletration;
             }
         }
     }

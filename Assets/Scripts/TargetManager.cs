@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
     [SerializeField] 
-    private Transform[] _spawnPoints;
+    private List<Transform> _spawnPoints;
     [SerializeField] 
     private TargetController _targetPrefab;
     [SerializeField] 
@@ -27,7 +28,9 @@ public class TargetManager : MonoBehaviour
     private void SpawnTarget()
     {
         _target = Instantiate(_targetPrefab);
-        _target.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Length)].transform.position;
+        int index = Random.Range(0, _spawnPoints.Count);
+        _target.transform.position = _spawnPoints[index].transform.position;
+        _spawnPoints.RemoveAt(index);
 
     }
     

@@ -4,6 +4,8 @@ public class GravitySource : MonoBehaviour
 {
     [SerializeField] 
     private float _mass;
+    [SerializeField]
+    private AnimationCurve _animationCurve;
 
     public virtual Vector2 GetAccelerationAtPosition(Vector3 position)
     {
